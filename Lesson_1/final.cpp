@@ -58,8 +58,8 @@ vector<vector<State>> ReadBoardFile(string path) {
 // cells with State type instead of int type.
 string CellString(State cell) {
   switch(cell) {
-    case State::kObstacle: return "⛰️   ";
-    default: return "0   "; 
+    case State::kObstacle: return " ⛰️ ";
+    default: return "  0 "; 
   }
 }
 
@@ -75,6 +75,13 @@ void PrintBoard(const vector<vector<State>> board) {
 }
 
 int main() {
+  
+	#ifndef ONLINE_JUDGE
+    // for getting input from input.txt
+    freopen("input.txt", "r", stdin);
+    // for writing output to output.txt
+    freopen("output.txt", "w", stdout);
+	#endif
   auto board = ReadBoardFile("1.board");
   PrintBoard(board);
 }
