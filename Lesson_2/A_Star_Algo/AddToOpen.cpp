@@ -48,24 +48,35 @@ int Heuristic(int x1, int y1, int x2, int y2) {
   return abs(x2 - x1) + abs(y2 - y1);
 }
 
-// TODO: Write the AddToOpen function here.
-void AddToOpen(int x,int y,int g,int h,vector<vector<int>> &open_vector,vector<vector<State>> &grid)
-{
-  vector<int> node {x,y,g,h};
-  open_vector.push_back(node);
+
+/** 
+ * Add a node to the open list and mark it as open. 
+ */
+void AddToOpen(int x, int y, int g, int h, vector<vector<int>> &openlist, vector<vector<State>> &grid) {
+  // Add node to open vector, and mark grid cell as closed.
+  openlist.push_back(vector<int>{x, y, g, h});
   grid[x][y] = State::kClosed;
 }
+
 
 /** 
  * Implementation of A* search algorithm
  */
 vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2]) {
-
+  // Create the vector of open nodes.
+  vector<vector<int>> open {};
+int  x = init[0];
+int  y = init[1];
+int  g = 0;
+int  h = Heuristic(init[0],init[1],goal[0],goal[1]);
+  // TODO: Initialize the starting node. 
+ AddToOpen( x, y, g, h, open, grid );
+  
+  // TODO: Use AddToOpen to add the starting node to the open vector.
 
   cout << "No path found!" << "\n";
-  return std::vector<vector<State>> {};
+  return std::vector<vector<State>>{};
 }
-
 
 string CellString(State cell) {
   switch(cell) {
