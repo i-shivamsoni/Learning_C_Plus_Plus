@@ -42,6 +42,17 @@ vector<vector<State>> ReadBoardFile(string path) {
   return board;
 }
 
+// TODO: Write function to compare the f-value of two nodes here
+bool Compare (vector<int> node1, vector<int> node2)
+{
+  bool flag = true;
+	int f1 = node1[2]+node1[3];
+    int f2  = node2[2]+node2[3];
+  	if(f2>f1){flag = false ;}    
+  
+      return flag;
+}
+
 
 // Calculate the manhattan distance
 int Heuristic(int x1, int y1, int x2, int y2) {
@@ -65,14 +76,13 @@ void AddToOpen(int x, int y, int g, int h, vector<vector<int>> &openlist, vector
 vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2]) {
   // Create the vector of open nodes.
   vector<vector<int>> open {};
-int  x = init[0];
-int  y = init[1];
-int  g = 0;
-int  h = Heuristic(init[0],init[1],goal[0],goal[1]);
-  // TODO: Initialize the starting node. 
- AddToOpen( x, y, g, h, open, grid );
   
-  // TODO: Use AddToOpen to add the starting node to the open vector.
+  // Initialize the starting node.
+  int x = init[0];
+  int y = init[1];
+  int g = 0;
+  int h = Heuristic(x, y, goal[0],goal[1]);
+  AddToOpen(x, y, g, h, open, grid);
 
   cout << "No path found!" << "\n";
   return std::vector<vector<State>>{};
@@ -106,4 +116,5 @@ int main() {
   // Tests
   TestHeuristic();
   TestAddToOpen();
+  TestCompare();
 }
