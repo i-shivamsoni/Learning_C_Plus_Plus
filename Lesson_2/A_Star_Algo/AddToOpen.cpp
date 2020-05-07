@@ -1,3 +1,4 @@
+#include <algorithm>  // for sort
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -6,11 +7,12 @@
 using std::cout;
 using std::ifstream;
 using std::istringstream;
+using std::sort;
 using std::string;
 using std::vector;
 using std::abs;
 
-enum class State {kEmpty, kObstacle, kClosed};
+enum class State {kEmpty, kObstacle, kClosed, kPath};
 
 
 vector<State> ParseLine(string line) {
@@ -42,15 +44,22 @@ vector<vector<State>> ReadBoardFile(string path) {
   return board;
 }
 
-// TODO: Write function to compare the f-value of two nodes here
-bool Compare (vector<int> node1, vector<int> node2)
-{
-  bool flag = true;
-	int f1 = node1[2]+node1[3];
-    int f2  = node2[2]+node2[3];
-  	if(f2>f1){flag = false ;}    
-  
-      return flag;
+
+/**
+ * Compare the F values of two cells.
+ */
+bool Compare(const vector<int> a, const vector<int> b) {
+  int f1 = a[2] + a[3]; // f1 = g1 + h1
+  int f2 = b[2] + b[3]; // f2 = g2 + h2
+  return f1 > f2; 
+}
+
+
+/**
+ * Sort the two-dimensional vector of ints in descending order.
+ */
+void CellSort(vector<vector<int>> *v) {
+  sort(v->begin(), v->end(), Compare);
 }
 
 
@@ -59,6 +68,17 @@ int Heuristic(int x1, int y1, int x2, int y2) {
   return abs(x2 - x1) + abs(y2 - y1);
 }
 
+
+// TODO: Write CheckValidCell here. Check that the 
+// cell is on the grid and not an obstacle (i.e. equals kEmpty).
+bool CheckValidCell(int x, int y ,vector<vector<State>> &grid )
+{
+bool on_grid_x = (x >= 0 && x < grid.size());
+  bool on_grid_y = (y >= 0 && y < grid[0].size());
+  if (on_grid_x && on_grid_y)
+    return grid[x][y] == State::kEmpty;
+  return false;
+}
 
 /** 
  * Add a node to the open list and mark it as open. 
@@ -84,13 +104,34 @@ vector<vector<State>> Search(vector<vector<State>> grid, int init[2], int goal[2
   int h = Heuristic(x, y, goal[0],goal[1]);
   AddToOpen(x, y, g, h, open, grid);
 
+  while (open.size() > 0) {
+    // Get the next node
+    CellSort(&open);
+    auto current = open.back();
+    open.pop_back();
+    x = current[0];
+    y = current[1];
+    grid[x][y] = State::kPath;
+
+    // Check if we're done.
+    if (x == goal[0] && y == goal[1]) {
+      return grid;
+    }
+    
+    // If we're not done, expand search to current node's neighbors.
+    // ExpandNeighbors
+  }
+  
+  // We've run out of new nodes to explore and haven't found a path.
   cout << "No path found!" << "\n";
   return std::vector<vector<State>>{};
 }
 
+
 string CellString(State cell) {
   switch(cell) {
     case State::kObstacle: return "⛰️   ";
+    case State::kPath: return "🚗   ";
     default: return "0   "; 
   }
 }
@@ -117,4 +158,6 @@ int main() {
   TestHeuristic();
   TestAddToOpen();
   TestCompare();
+  TestSearch();
+  TestCheckValidCell();
 }
