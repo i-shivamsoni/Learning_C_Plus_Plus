@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/d/Programming/c++/C++_Learning/Lesson_3/cmake_example/src/increment_and_sum.cpp
+vect_add_one.h
+/mnt/d/Programming/c++/C++_Learning/Lesson_3/cmake_example/src/vect_add_one.h
+
+/mnt/d/Programming/c++/C++_Learning/Lesson_3/cmake_example/src/increment_and_sum.h
+vector
+-
+
+/mnt/d/Programming/c++/C++_Learning/Lesson_3/cmake_example/src/main.cpp
+iostream
+-
+vector
+-
+increment_and_sum.h
+/mnt/d/Programming/c++/C++_Learning/Lesson_3/cmake_example/src/increment_and_sum.h
+
+/mnt/d/Programming/c++/C++_Learning/Lesson_3/cmake_example/src/vect_add_one.cpp
+vect_add_one.h
+/mnt/d/Programming/c++/C++_Learning/Lesson_3/cmake_example/src/vect_add_one.h
+
+/mnt/d/Programming/c++/C++_Learning/Lesson_3/cmake_example/src/vect_add_one.h
+vector
+-
+
