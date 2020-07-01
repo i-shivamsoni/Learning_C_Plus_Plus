@@ -1,10 +1,11 @@
-#ifndef VECT_ADD_ONE_H
-#define VECT_ADD_ONE_H
+#include "vect_add_one.h"
 
-#include <vector>
-using std::vector;
+int IncrementAndComputeVectorSum(vector<int> v) {
+    int total = 0;
+    AddOneToEach(v);
 
-// AddOneToEach method declaration.
-void AddOneToEach(vector<int> &v);
-
-#endif
+    for (auto i: v) {
+        total += i;
+    }
+    return total;
+}
