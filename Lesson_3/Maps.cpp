@@ -30,6 +30,7 @@ int main() {
     // Here, the value my_dictionary[key] is a vector of strings.
     // We iterate over the vector and print the strings.
     cout << key << ": \n";
+    
     auto definitions = my_dictionary[key];
     for (string definition : definitions) {
         cout << definition << "\n";
